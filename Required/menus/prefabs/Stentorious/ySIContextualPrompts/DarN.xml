@@ -1,0 +1,75 @@
+<image name="ySICP">
+
+	<visible> 1 </visible>
+	<alpha> <copy src="io()" trait="_ySICP+A" /> </alpha>
+	<locus> 1 </locus>
+	<x>
+		<copy src="sibling(replacementTextC)" trait="x" />
+		<sub>
+			<copy src="sibling(replacementTextC)" trait="width" />
+			<div> 2 </div>
+			<add> 28 </add>
+			<onlyif>
+				<copy src="sibling(replacementTextC)" trait="width" />
+				<gt> 6 </gt>
+			</onlyif>
+		</sub>
+		<sub>
+			<copy src="justify_center_hotrect" trait="width" />
+			<sub src="justify_center_hotrect" trait="_horbuf" />
+			<div> 2 </div>
+			<add> 28 </add>
+			<onlyifnot>
+				<copy src="sibling(replacementTextC)" trait="width" />
+				<gt> 6 </gt>
+			</onlyifnot>
+		</sub>
+	</x>
+	<y>
+		<copy> 0.5 </copy>
+		<add>
+			<copy src="sibling(replacementTextC)" trait="y" />
+			<onlyif>
+				<copy src="sibling(replacementTextC)" trait="width" />
+				<gt> 6 </gt>
+			</onlyif>
+		</add>
+		<add>
+			<copy src="justify_center_hotrect" trait="y" />
+			<add> 3 </add>
+			<onlyifnot>
+				<copy src="sibling(replacementTextC)" trait="width" />
+				<gt> 6 </gt>
+			</onlyifnot>
+		</add>
+	</y>
+	<height> 20 </height>
+	<width> 20 </width>
+	<zoom> &scale; </zoom>
+	<systemcolor>
+		<copy> 0 </copy>
+		<add src="info_seperator" trait="systemcolor" />
+		<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
+	</systemcolor>
+	<filename> <copy src="io()" trait="_ySICP+I" /> </filename>
+
+	<image name="DropShadow">
+		<visible> <copy src="parent()" trait="visible" /> </visible>
+		<alpha>
+			<copy src="parent()" trait="alpha" />
+			<div> 2 </div>
+		</alpha>
+		<depth> -1 </depth>
+		<x> 1 </x>
+		<y> 1 </y>
+		<height> <copy src="parent()" trait="height" /> </height>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<zoom> &scale; </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> <copy src="parent()" trait="filename" /> </filename>
+	</image>
+
+</image>

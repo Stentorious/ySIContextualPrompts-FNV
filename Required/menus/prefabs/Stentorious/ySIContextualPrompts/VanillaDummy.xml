@@ -1,0 +1,9 @@
+<rect name="ySICP_Dummy">
+
+	<visible> 0 </visible>
+
+	<_x> <copy src="parent()" trait="x" /> </_x>
+	<_y> <copy src="parent()" trait="y" /> </_y>
+	<_width> <copy src="parent()" trait="width" /> </_width>
+
+</rect>

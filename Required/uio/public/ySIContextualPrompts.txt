@@ -1,0 +1,2 @@
+Stentorious\ySIContextualPrompts\InjectTrait\HUDMainMenu.xml::HUDMainMenu
+true

@@ -1,0 +1,75 @@
+<image name="ySICP">
+
+	<visible> 1 </visible>
+	<alpha> <copy src="io()" trait="_ySICP+A" /> </alpha>
+	<locus> 1 </locus>
+	<x>
+		<copy> 0 </copy>
+		<sub>
+			<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="width" />
+			<div> 2 </div>
+			<add> 38 </add>
+			<sub src="sibling(TheHUDEditor_JustifyCenterText)" trait="x" />
+			<onlyif>
+				<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="width" />
+				<gt> 13 </gt>
+			</onlyif>
+		</sub>
+		<add>
+			<copy src="justify_center_hotrect" trait="x" />
+			<add src="TheHUDEditor_ButtonText" trait="_x" />
+			<sub> 30 </sub>
+			<onlyifnot>
+				<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="width" />
+				<gt> 13 </gt>
+			</onlyifnot>
+		</add>
+	</x>
+	<y>
+		<copy> -4 </copy>
+		<add>
+			<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="y" />
+			<onlyif>
+				<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="width" />
+				<gt> 13 </gt>
+			</onlyif>
+		</add>
+		<add>
+			<copy src="justify_center_hotrect" trait="y" />
+			<add src="TheHUDEditor_ButtonText" trait="y" />
+			<onlyifnot>
+				<copy src="sibling(TheHUDEditor_JustifyCenterText)" trait="width" />
+				<gt> 13 </gt>
+			</onlyifnot>
+		</add>
+	</y>
+	<height> 30 </height>
+	<width> 30 </width>
+	<zoom> &scale; </zoom>
+	<systemcolor>
+		<copy> 0 </copy>
+		<add src="info_seperator" trait="systemcolor" />
+		<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
+	</systemcolor>
+	<filename> <copy src="io()" trait="_ySICP+I" /> </filename>
+
+	<image name="DropShadow">
+		<visible> <copy src="parent()" trait="visible" /> </visible>
+		<alpha>
+			<copy src="parent()" trait="alpha" />
+			<div> 2 </div>
+		</alpha>
+		<depth> -1 </depth>
+		<x> 1 </x>
+		<y> 1 </y>
+		<height> <copy src="parent()" trait="height" /> </height>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<zoom> &scale; </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> <copy src="parent()" trait="filename" /> </filename>
+	</image>
+
+</image>

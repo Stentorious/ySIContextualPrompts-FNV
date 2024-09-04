@@ -1,0 +1,77 @@
+<image name="ySICP">
+
+	<visible> 1 </visible>
+	<alpha> <copy src="io()" trait="_ySICP+A" /> </alpha>
+	<locus> 1 </locus>
+	<x>
+		<copy> 160 </copy>
+		<sub src="justify_center_hotrect" trait="x" />
+		<sub>
+			<copy src="ySICP_Dummy" trait="_width" />
+			<div> 2 </div>
+			<add> 40 </add>
+			<onlyif>
+				<copy src="ySICP_Dummy" trait="_width" />
+				<gt> 13 </gt>
+			</onlyif>
+		</sub>
+		<sub>
+			<copy src="justify_center_hotrect" trait="width" />
+			<sub src="justify_center_hotrect" trait="_horbuf" />
+			<div> 2 </div>
+			<add> 45 </add>
+			<onlyifnot>
+				<copy src="ySICP_Dummy" trait="_width" />
+				<gt> 13 </gt>
+			</onlyifnot>
+		</sub>
+	</x>
+	<y>
+		<copy> -3.3 </copy>
+		<sub src="justify_center_hotrect" trait="y" />
+		<add>
+			<copy src="ySICP_Dummy" trait="_y" />
+			<onlyif>
+				<copy src="ySICP_Dummy" trait="_width" />
+				<gt> 13 </gt>
+			</onlyif>
+		</add>
+		<add>
+			<copy src="justify_center_hotrect" trait="y" />
+			<add> 12 </add>
+			<onlyifnot>
+				<copy src="ySICP_Dummy" trait="_width" />
+				<gt> 13 </gt>
+			</onlyifnot>
+		</add>
+	</y>
+	<height> 30 </height>
+	<width> 30 </width>
+	<zoom> &scale; </zoom>
+	<systemcolor>
+		<copy> 0 </copy>
+		<add src="info_seperator" trait="systemcolor" />
+		<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
+	</systemcolor>
+	<filename> <copy src="io()" trait="_ySICP+I" /> </filename>
+
+	<image name="DropShadow">
+		<visible> <copy src="parent()" trait="visible" /> </visible>
+		<alpha>
+			<copy src="parent()" trait="alpha" />
+			<div> 2 </div>
+		</alpha>
+		<depth> -1 </depth>
+		<x> 1 </x>
+		<y> 1 </y>
+		<height> <copy src="parent()" trait="height" /> </height>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<zoom> &scale; </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> <copy src="parent()" trait="filename" /> </filename>
+	</image>
+
+</image>
