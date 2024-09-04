@@ -3,7 +3,7 @@
 	<installSteps order="Explicit">
 		<installStep name="ySI - Contextual Prompts">
 			<optionalFileGroups order="Explicit">
-				<group name="Main File" type="SelectAtLeastOne">
+				<group name="Main Files" type="SelectAtLeastOne">
 					<plugins order="Explicit">
 						<plugin name="Required">
 							<description>ySI - Contextual Prompts core files.</description>
