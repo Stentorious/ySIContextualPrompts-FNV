@@ -25,4 +25,4 @@ Adds contextual ySI - Sorting Icons to the Fallout New Vegas crosshair prompt.
 - [ySI - Sorting Ycons](https://www.nexusmods.com/newvegas/mods/74358)
 
 ## Installation
-Installs like any other mod, manually or using a mod manager.
+Install with a mod manager via the FOMOD installer.
