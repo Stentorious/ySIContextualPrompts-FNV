@@ -23,6 +23,7 @@ Adds contextual ySI - Sorting Icons to the Fallout New Vegas crosshair prompt.
 - [ySI - Colorful Icons Support](https://www.nexusmods.com/newvegas/mods/85075)
 
 ## Requirements
+- [xNVSE](https://www.nexusmods.com/newvegas/mods/67883) (6.3.3+)
 - [JIP LN NVSE](https://www.nexusmods.com/newvegas/mods/58277)
 - [User Interface Organizer](https://www.nexusmods.com/newvegas/mods/57174)
 - [yUI - User Ynterface](https://www.nexusmods.com/newvegas/mods/74357)
