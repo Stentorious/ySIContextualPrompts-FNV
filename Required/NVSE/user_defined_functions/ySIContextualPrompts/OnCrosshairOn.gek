@@ -1,12 +1,18 @@
+ref rCrosshair
+
 int iType
 int iLockState
 int iIconAlpha
-ref rCrosshair
 
 begin Function {rCrosshair}
 
+	; Special case for placeable water sources
+	if eval GetCrosshairWater
+		SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_Flask.dds"
+		iIconAlpha = 255
+
 	; Check if ref is valid and assign icon
-	if eval IsFormValid rCrosshair && IsReference rCrosshair
+	elseif eval IsFormValid rCrosshair && IsReference rCrosshair
 		iType = rCrosshair.GetType
 
 		; Actor icons
@@ -17,7 +23,7 @@ begin Function {rCrosshair}
 
 			; Assign vendor icon based on service type
 			elseif eval rCrosshair.GetMerchantContainer
-				if eval GetServiceFlag (rCrosshair.gbo) 131072
+				if eval GetServiceFlag (rCrosshair.GBO) 131072
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_WeaponRepairKit.dds"
 				elseif eval rCrosshair.GetIsClass Doctor
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_DoctorBag.dds"
@@ -57,11 +63,6 @@ begin Function {rCrosshair}
 			SetUIStringAlt "HUDMainMenu\_ySICP+I" (rCrosshair.ySIGetTrait "filename")
 			iIconAlpha = 255
 		endif
-
-	; Special case for placeable water sources, as OnCrosshairOn event passes their base form
-	elseif eval rCrosshair = GetCrosshairWater
-		SetUIStringAlt "HUDMainMenu\_ySICP+I" (ySIGetTrait "filename" rCrosshair)
-		iIconAlpha = 255
 	endif
 
 	; Update icon visibility
