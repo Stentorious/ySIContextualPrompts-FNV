@@ -1,8 +1,8 @@
-; ySI - Contextual Prompts 2.2 - Stentorious
+; ySI - Contextual Prompts 2.3 - Stentorious
 
 ; On game restart
-if Goo1.AuxVarGetFlt "*ySICP_Init" != 1
-	Goo1.AuxVarSetFlt "*ySICP_Init" 1
+if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
+	Goo1.AuxVarSetFlt "*ySICP_Init" 1 0
 
 	; Check for requirements
 	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
@@ -22,6 +22,7 @@ if Goo1.AuxVarGetFlt "*ySICP_Init" != 1
 		MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest yUI - User Ynterface plugin."
 		return
 	endif
+	Goo1.AuxVarSetFlt "*ySICP_Init" 1 1
 
 	; Inject prompt icon XML
 	if GetUIFloatAlt "HUDMainMenu\InfoWrap\visible" != -999
@@ -76,15 +77,7 @@ if Goo1.AuxVarGetFlt "*ySICP_Init" != 1
 
 endif
 
-; On game load
-; Check for requirements
-if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
-else
-	return
+; Update prompt on game load
+if eval Goo1.AuxVarSetFlt "*ySICP_Init" 1 == 1
+	CallAfterFrames 0 ({} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef))
 endif
-if GetPluginVersion "UI Organizer Plugin" < 230 || FileExists "menus\ySI\ySI.xml" == 0 || GetPluginVersion "yUI" < 140
-	return
-endif
-
-; Update prompt icon
-CallAfterFrames 0 ({} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef))
