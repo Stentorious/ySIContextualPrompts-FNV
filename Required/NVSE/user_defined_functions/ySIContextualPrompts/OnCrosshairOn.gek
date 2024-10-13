@@ -20,21 +20,23 @@ begin Function {rCrosshair}
 			if eval rCrosshair.GetDead
 				SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_Skull.dds"
 				iIconAlpha = 255
-
+			; Check if ref has icon assigned via the ySI framework
+			elseif eval rCrosshair.ySIGetTrait "tag" != ""
+				SetUIStringAlt "HUDMainMenu\_ySICP+I" (rCrosshair.ySIGetTrait "filename")
+				iIconAlpha = 255
 			; Assign vendor icon based on service type
 			elseif eval rCrosshair.GetMerchantContainer
 				if eval GetServiceFlag (rCrosshair.GBO) 131072
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_WeaponRepairKit.dds"
+				elseif eval rCrosshair.GetIsClass VendorDrinks
+					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_Alcohol.dds"
 				elseif eval rCrosshair.GetIsClass Doctor
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_DoctorBag.dds"
+				elseif eval rCrosshair.GetIsClass VendorFood
+					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_CookedMeal.dds"
 				else
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_BottleCap.dds"
 				endif
-				iIconAlpha = 255
-
-			; Check if ref has icon assigned via the ySI framework
-			elseif eval rCrosshair.ySIGetTrait "tag" != ""
-				SetUIStringAlt "HUDMainMenu\_ySICP+I" (rCrosshair.ySIGetTrait "filename")
 				iIconAlpha = 255
 			endif
 
