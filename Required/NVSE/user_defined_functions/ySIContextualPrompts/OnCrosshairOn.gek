@@ -3,6 +3,7 @@ ref rCrosshair
 int iType
 int iLockState
 int iIconAlpha
+ref rClass
 
 begin Function {rCrosshair}
 
@@ -17,23 +18,33 @@ begin Function {rCrosshair}
 
 		; Actor icons
 		if eval iType == 42 || iType == 43
+
 			if eval rCrosshair.GetDead
 				SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_Skull.dds"
 				iIconAlpha = 255
+
 			; Check if ref has icon assigned via the ySI framework
 			elseif eval rCrosshair.ySIGetTrait "tag" != ""
 				SetUIStringAlt "HUDMainMenu\_ySICP+I" (rCrosshair.ySIGetTrait "filename")
 				iIconAlpha = 255
+
 			; Assign vendor icon based on service type
 			elseif eval rCrosshair.GetMerchantContainer
+				rClass = rCrosshair.GetClass
 				if eval GetServiceFlag (rCrosshair.GBO) 131072
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_WeaponRepairKit.dds"
-				elseif eval rCrosshair.GetIsClass VendorDrinks
+				elseif eval rClass == VendorDrinks
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_Alcohol.dds"
-				elseif eval rCrosshair.GetIsClass Doctor
+				elseif eval rClass == Doctor
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_DoctorBag.dds"
-				elseif eval rCrosshair.GetIsClass VendorFood
+				elseif eval rClass == VendorWeapons
+					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Ammo_Bullet.dds"
+				elseif eval rClass == VendorFood
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_CookedMeal.dds"
+				elseif eval rClass == VendorClothes
+					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Apparel_Other_Bag.dds"
+				elseif eval rClass == VendorChems || rClass == VendorChemsFood
+					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_Drug.dds"
 				else
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_BottleCap.dds"
 				endif
