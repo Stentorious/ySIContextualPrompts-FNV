@@ -1,4 +1,4 @@
-; ySI - Contextual Prompts 2.3 - Stentorious
+; ySI - Contextual Prompts 2.4 - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
@@ -78,6 +78,6 @@ if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
 endif
 
 ; Update prompt on game load
-if eval Goo1.AuxVarSetFlt "*ySICP_Init" 1 == 1
+if eval Goo1.AuxVarGetFlt "*ySICP_Init" 1 == 1
 	CallAfterFrames 0 ({} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef))
 endif
