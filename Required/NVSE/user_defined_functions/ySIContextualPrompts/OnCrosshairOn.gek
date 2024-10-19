@@ -19,6 +19,7 @@ begin Function {rCrosshair}
 		; Actor icons
 		if eval iType == 42 || iType == 43
 
+			; Dead
 			if eval rCrosshair.GetDead
 				SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_Skull.dds"
 				iIconAlpha = 255
@@ -43,7 +44,7 @@ begin Function {rCrosshair}
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_CookedMeal.dds"
 				elseif eval rClass == VendorClothes
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Apparel_Other_Bag.dds"
-				elseif eval rClass == VendorChems || rClass == VendorChemsFood
+				elseif eval IsModLoaded "TaleOfTwoWastelands.esm" && (rClass == (EditorIDToFormID "VendorChems") || rClass == (EditorIDToFormID "VendorChemsFood"))
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Aid_Drug.dds"
 				else
 					SetUIStringAlt "HUDMainMenu\_ySICP+I" "interface\icons\Misc_BottleCap.dds"
