@@ -1,4 +1,4 @@
-; ySI - Contextual Prompts 2.4 - Stentorious
+; ySI - Contextual Prompts - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
@@ -23,6 +23,8 @@ if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
 		return
 	endif
 	Goo1.AuxVarSetFlt "*ySICP_Init" 1 1
+
+	Goo1.AuxVarSetFlt "*TaleOfTwoWastelands.esm" (eval IsModLoaded "TaleOfTwoWastelands.esm")
 
 	; Inject prompt icon XML
 	if GetUIFloatAlt "HUDMainMenu\InfoWrap\visible" != -999

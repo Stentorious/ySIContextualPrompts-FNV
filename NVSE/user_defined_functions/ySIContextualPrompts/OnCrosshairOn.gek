@@ -1,0 +1,107 @@
+ref rCrosshair
+
+int iType
+int iLockState
+int iIconAlpha
+ref rTemp
+string_var sFilename
+
+begin Function {rCrosshair}
+
+	; Special case for placeable water sources
+	if eval GetCrosshairWater
+		sFilename = "interface\icons\Misc_Flask.dds"
+		iIconAlpha = 255
+
+	; Check if ref is valid and assign icon
+	elseif eval IsFormValid rCrosshair && IsReference rCrosshair
+		iType = rCrosshair.GetType
+
+		; Actor icons
+		if eval iType == 42 || iType == 43
+
+			; Dead
+			if eval rCrosshair.GetDead
+				sFilename = "interface\icons\Misc_Skull.dds"
+				iIconAlpha = 255
+
+			; Check if ref has icon assigned via the ySI framework
+			elseif eval rCrosshair.ySIGetTrait "tag" != ""
+				sFilename = rCrosshair.ySIGetTrait "filename"
+				iIconAlpha = 255
+
+			; Assign vendor icon based on service type
+			elseif eval rCrosshair.GetMerchantContainer
+				rTemp = rCrosshair.GetClass
+				if eval GetServiceFlag (rCrosshair.GBO) 131072
+					sFilename = "interface\icons\Aid_WeaponRepairKit.dds"
+				elseif eval rTemp == VendorDrinks
+					sFilename = "interface\icons\Aid_Alcohol.dds"
+				elseif eval rTemp == Doctor
+					sFilename = "interface\icons\Aid_DoctorBag.dds"
+				elseif eval rTemp == VendorWeapons
+					sFilename = "interface\icons\Ammo_Bullet.dds"
+				elseif eval rTemp == VendorFood
+					sFilename = "interface\icons\Aid_CookedMeal.dds"
+				elseif eval rTemp == VendorClothes
+					sFilename = "interface\icons\Apparel_Other_Bag.dds"
+				elseif eval Goo1.AuxVarGetFlt "*TaleOfTwoWastelands.esm" && (rTemp == (EditorIDToFormID "VendorChems") || rTemp == (EditorIDToFormID "VendorChemsFood"))
+					sFilename = "interface\icons\Aid_Drug.dds"
+				else
+					sFilename = "interface\icons\Misc_BottleCap.dds"
+				endif
+				iIconAlpha = 255
+			endif
+
+		; Container/door icons
+		elseif eval iType == 27 || iType == 28
+
+			; Assign vendor icon based on lock state
+			iLockState = rCrosshair.GetLocked
+			if iLockState > 0
+				if eval rCrosshair.PlayerHasKey
+					sFilename = "interface\icons\Misc_Keychain.dds"
+				elseif eval rCrosshair.GetLockLevel > 100 || iLockState == 2
+					sFilename = "interface\icons\Misc_Key.dds"
+				else
+					sFilename = "interface\icons\Misc_BobbyPin.dds"
+				endif
+				iIconAlpha = 255
+
+			; Assign interior/exterior door icons
+			elseif eval iType == 28
+				sFilename = "interface\icons\Misc_Door"
+				if eval rCrosshair.IsLoadDoor && rCrosshair.IsInInterior
+					rTemp = rCrosshair.GetTeleportDoor
+					if eval IsFormValid rTemp && rTemp.IsInInterior == 0
+						sFilename = "interface\icons\Misc_Door_Ext"
+					endif
+				endif
+				; Colorful icon support
+				if eval GetUIFloatAlt "HUDMainMenu\_ySIColorFulIconsFix"
+					sFilename += "_Color.dds"
+				else
+					sFilename += ".dds"
+				endif
+				iIconAlpha = 255
+			elseif eval rCrosshair.ySIGetTrait "tag" != ""
+				sFilename = rCrosshair.ySIGetTrait "filename"
+				iIconAlpha = 255
+			endif
+
+		; Other icons
+		elseif eval rCrosshair.ySIGetTrait "tag" != ""
+			sFilename = rCrosshair.ySIGetTrait "filename"
+			iIconAlpha = 255
+		endif
+	endif
+
+	; Update icon visibility
+	SetUIFloatAlt "HUDMainMenu\_ySICP+A" iIconAlpha
+	if eval iIconAlpha > 0
+		SetUIStringAlt "HUDMainMenu\_ySICP+I" (sFilename)
+	endif
+
+	sv_Destruct sFilename
+
+end
