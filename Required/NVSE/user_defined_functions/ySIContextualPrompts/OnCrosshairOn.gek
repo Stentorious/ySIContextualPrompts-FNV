@@ -70,18 +70,12 @@ begin Function {rCrosshair}
 
 			; Assign interior/exterior door icons
 			elseif eval iType == 28
-				sFilename = "interface\Stentorious\icons\Door"
+				sFilename = "interface\icons\Misc_Door.dds"
 				if eval rCrosshair.IsLoadDoor && rCrosshair.IsInInterior
 					rTemp = rCrosshair.GetTeleportDoor
 					if eval IsFormValid rTemp && rTemp.IsInInterior == 0
-						sFilename = "interface\Stentorious\icons\Door_Ext"
+						sFilename = "interface\icons\Misc_Door_Ext.dds"
 					endif
-				endif
-				; Colorful icon support
-				if eval GetUIFloatAlt "HUDMainMenu\_ySIColorFulIconsFix"
-					sFilename += "_Color.dds"
-				else
-					sFilename += ".dds"
 				endif
 				iIconAlpha = 255
 			elseif eval rCrosshair.ySIGetTrait "tag" != ""
