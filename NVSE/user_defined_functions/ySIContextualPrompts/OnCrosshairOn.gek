@@ -70,11 +70,11 @@ begin Function {rCrosshair}
 
 			; Assign interior/exterior door icons
 			elseif eval iType == 28
-				sFilename = "interface\icons\Misc_Door"
+				sFilename = "interface\Stentorious\icons\Door"
 				if eval rCrosshair.IsLoadDoor && rCrosshair.IsInInterior
 					rTemp = rCrosshair.GetTeleportDoor
 					if eval IsFormValid rTemp && rTemp.IsInInterior == 0
-						sFilename = "interface\icons\Misc_Door_Ext"
+						sFilename = "interface\Stentorious\icons\Door_Ext"
 					endif
 				endif
 				; Colorful icon support
