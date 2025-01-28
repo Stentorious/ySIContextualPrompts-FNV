@@ -32,21 +32,10 @@ begin Function {rCrosshair}
 
 			; Assign vendor icon based on service type
 			elseif eval rCrosshair.GetMerchantContainer
-				rTemp = rCrosshair.GetClass
 				if eval GetServiceFlag (rCrosshair.GBO) 131072
 					sFilename = "interface\icons\Aid_WeaponRepairKit.dds"
-				elseif eval rTemp == VendorDrinks
-					sFilename = "interface\icons\Aid_Alcohol.dds"
-				elseif eval rTemp == Doctor
-					sFilename = "interface\icons\Aid_DoctorBag.dds"
-				elseif eval rTemp == VendorWeapons
-					sFilename = "interface\icons\Ammo_Bullet.dds"
-				elseif eval rTemp == VendorFood
-					sFilename = "interface\icons\Aid_CookedMeal.dds"
-				elseif eval rTemp == VendorClothes
-					sFilename = "interface\icons\Apparel_Other_Bag.dds"
-				elseif eval Goo1.AuxVarGetFlt "*TaleOfTwoWastelands.esm" && (rTemp == (EditorIDToFormID "VendorChems") || rTemp == (EditorIDToFormID "VendorChemsFood"))
-					sFilename = "interface\icons\Aid_Drug.dds"
+				elseif eval ySIGetTrait "tag" (rTemp = rCrosshair.GetClass) != ""
+					sFilename = ySIGetTrait "filename" rTemp
 				else
 					sFilename = "interface\icons\Misc_BottleCap.dds"
 				endif
