@@ -1,83 +1,80 @@
 ; ySI - Contextual Prompts - Stentorious
 
+; On game load
+CallAfterFrames 0 ({} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef))
+
 ; On game restart
-if Goo1.AuxVarGetFlt "*ySICP_Init" 0 != 1
-	Goo1.AuxVarSetFlt "*ySICP_Init" 1 0
+if Goo1.AuxVarGetFlt "*ySICP_Init"
+	return
+endif
+Goo1.AuxVarSetFlt "*ySICP_Init" 1
 
-	; Check for requirements
-	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
-	else
-		MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall xNVSE 6.3.3+."
-		return
-	endif
-	if GetPluginVersion "UI Organizer Plugin" < 230
-		MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest User Interface Organizer plugin."
-		return
-	endif
-	if FileExists "menus\ySI\ySI.xml" == 0
-		MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest ySI - Sorting Ycons."
-		return
-	endif
-	if GetPluginVersion "yUI" < 140
-		MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest yUI - User Ynterface plugin."
-		return
-	endif
-	Goo1.AuxVarSetFlt "*ySICP_Init" 1 1
-
-	; Inject prompt icon XML
-	if GetUIFloatAlt "HUDMainMenu\InfoWrap\visible" != -999
-		if eval IsModLoaded "TheHUDEditor.esm"
-			if eval IsModLoaded "DarNifiedUINV.esp"
-				InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDDarN.xml"
-				ModUIFloat "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\_x" -13
-			elseif eval IsModLoaded "Vanilla UI Plus.esp"
-				InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2\VUI+PromptClone\button_text" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDVUI+Prompt.xml"
-				InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2\VUI+ActivatorName" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDVUI+Name.xml"
-			else
-				InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUD.xml"
-			endif
-		elseif eval IsModLoaded "DarNifiedUINV.esp"
-			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\DarN.xml"
-			ModUIFloat "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\_x" -13
-		elseif eval IsModLoaded "Vanilla UI Plus.esp"
-			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VUI+.xml"
-		else
-			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VanillaDummy.xml"
-			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_hotrect" "data\menus\prefabs\Stentorious\ySIContextualPrompts\Vanilla.xml"
-		endif
-	else
-		if eval IsModLoaded "M.U.X. Series - Interface Overhaul.esp"
-			InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\MUX.xml"
-			SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\button_text\font" (GetUIFloatAlt "HUDMainMenu\Info\MUX_Reticle\font")
-			SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\button_text\zoom" (GetUIFloatAlt "HUDMainMenu\Info\MUX_Reticle\zoom")
-		elseif eval IsModLoaded "Vanilla UI Plus.esp"
-			InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VUI+.xml"
-		else
-			InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VanillaDummy.xml"
-			InjectUIXML "HUDMainMenu\Info\justify_center_hotrect" "data\menus\prefabs\Stentorious\ySIContextualPrompts\Vanilla.xml"
-		endif
-	endif
-
-	; Update prompt icon on crosshair change and LockPick menu close
-	SetEventHandler "OnCrosshairOn" (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek")
-	SetOnMenuCloseEventHandler ({int iMenuID} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef)) 1 1014
-
-	; Prevent prompt text wrapping
-	SetUIFloatAlt "HUDMainMenu\Info\justify_center_text:2\wrapwidth" 600
-	SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_text:2\wrapwidth" 600
-
-	; Hide crosshair button prompt
-	SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\xbox_button\alpha" 0
-	SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\PCShortcutLabel\alpha" 0
-	SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\xbox_button\alpha" 0
-	SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\PCShortcutLabel\alpha" 0
-	if GetUIFloatAlt "HUDMainMenu\_VUI+HUDPrompt" == 0
-		SetUIFloatAlt "HUDMainMenu\_VUI+HUDPrompt" 1
-	endif
-
+; Check for requirements
+if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
+else
+	MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall xNVSE 6.3.10+."
+	return
+endif
+if GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+if FileExists "menus\ySI\ySI.xml" == 0
+	MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest ySI - Sorting Ycons."
+	return
+endif
+if GetPluginVersion "yUI" < 140
+	MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall latest yUI - User Ynterface plugin."
+	return
 endif
 
-; Update prompt on game load
-if eval Goo1.AuxVarGetFlt "*ySICP_Init" 1 == 1
-	CallAfterFrames 0 ({} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef))
+; Inject prompt icon XML
+if GetUIFloatAlt "HUDMainMenu\InfoWrap\visible" != -999
+	if eval IsModLoaded "TheHUDEditor.esm"
+		if eval IsModLoaded "DarNifiedUINV.esp"
+			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDDarN.xml"
+			ModUIFloat "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\_x" -13
+		elseif eval IsModLoaded "Vanilla UI Plus.esp"
+			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2\VUI+PromptClone\button_text" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDVUI+Prompt.xml"
+			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2\VUI+ActivatorName" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUDVUI+Name.xml"
+		else
+			InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\HUD.xml"
+		endif
+	elseif eval IsModLoaded "DarNifiedUINV.esp"
+		InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\DarN.xml"
+		ModUIFloat "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\_x" -13
+	elseif eval IsModLoaded "Vanilla UI Plus.esp"
+		InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VUI+.xml"
+	else
+		InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VanillaDummy.xml"
+		InjectUIXML "HUDMainMenu\InfoWrap\Info\justify_center_hotrect" "data\menus\prefabs\Stentorious\ySIContextualPrompts\Vanilla.xml"
+	endif
+else
+	if eval IsModLoaded "M.U.X. Series - Interface Overhaul.esp"
+		InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\MUX.xml"
+		SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\button_text\font" (GetUIFloatAlt "HUDMainMenu\Info\MUX_Reticle\font")
+		SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\button_text\zoom" (GetUIFloatAlt "HUDMainMenu\Info\MUX_Reticle\zoom")
+	elseif eval IsModLoaded "Vanilla UI Plus.esp"
+		InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VUI+.xml"
+	else
+		InjectUIXML "HUDMainMenu\Info\justify_center_text:2" "data\menus\prefabs\Stentorious\ySIContextualPrompts\VanillaDummy.xml"
+		InjectUIXML "HUDMainMenu\Info\justify_center_hotrect" "data\menus\prefabs\Stentorious\ySIContextualPrompts\Vanilla.xml"
+	endif
+endif
+
+; Update prompt icon on crosshair change and LockPick menu close
+SetEventHandler "OnCrosshairOn" (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek")
+SetOnMenuCloseEventHandler ({int iMenuID} => Call (CompileScript "ySIContextualPrompts\OnCrosshairOn.gek") (GetCrosshairRef)) 1 1014
+
+; Prevent prompt text wrapping
+SetUIFloatAlt "HUDMainMenu\Info\justify_center_text:2\wrapwidth" 600
+SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_text:2\wrapwidth" 600
+
+; Hide crosshair button prompt
+SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\xbox_button\alpha" 0
+SetUIFloatAlt "HUDMainMenu\Info\justify_center_hotrect\PCShortcutLabel\alpha" 0
+SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\xbox_button\alpha" 0
+SetUIFloatAlt "HUDMainMenu\InfoWrap\Info\justify_center_hotrect\PCShortcutLabel\alpha" 0
+if GetUIFloatAlt "HUDMainMenu\_VUI+HUDPrompt" == 0
+	SetUIFloatAlt "HUDMainMenu\_VUI+HUDPrompt" 1
 endif
