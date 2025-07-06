@@ -10,8 +10,7 @@ endif
 Goo1.AuxVarSetFlt "*ySICP_Init" 1
 
 ; Check for requirements
-if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
-else
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
 	MessageBoxEx "ySI - Contextual Prompts missing requirement!%rInstall xNVSE 6.3.10+."
 	return
 endif
